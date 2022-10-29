@@ -6,4 +6,7 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <Target Name="Deploy" AfterTargets="Build">
+        <Copy SourceFiles="$(OutputPath)SimpleConfig.dll" DestinationFolder="C:\Users\zande\Code\C#\Global" OverwriteReadOnlyFiles="true" />
+    </Target>
 </Project>

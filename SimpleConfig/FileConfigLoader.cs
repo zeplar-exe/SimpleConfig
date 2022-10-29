@@ -2,13 +2,18 @@
 
 public class FileConfigLoader : IConfigLoader
 {
-    private ConfigContainer Container { get; }
+    public ConfigContainer Container { get; }
 
     public FileConfigLoader()
     {
         Container = new ConfigContainer();
     }
-    
+
+    public FileConfigLoader(ConfigContainer container)
+    {
+        Container = container;
+    }
+
     public T Get<T>(string key)
     {
         return Container.GetOfType<T>(key);
