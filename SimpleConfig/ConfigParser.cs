@@ -1,19 +1,17 @@
-﻿using System.Reflection;
-using System.Text;
+﻿using System.Text;
 
-using SimpleConfig.ValueParsers;
+using SimpleConfig.ValueParsers.Sources;
 
 namespace SimpleConfig;
 
 public class ConfigParser
 {
-    private static ConfigValueParser[] ValueParsers = Assembly
-        .GetExecutingAssembly()
-        .GetTypes()
-        .Where(t => t != typeof(ConfigValueParser) && typeof(ConfigValueParser).IsAssignableFrom(t))
-        .Select(Activator.CreateInstance)
-        .Cast<ConfigValueParser>()
-        .ToArray();
+    private IValueParserSource ValueParserSource { get; }
+
+    public ConfigParser(IValueParserSource valueParserSource)
+    {
+        ValueParserSource = valueParserSource;
+    }
 
     public ConfigContainer Parse(string input)
     {
@@ -47,7 +45,7 @@ public class ConfigParser
                 value.Append(next);
             }
 
-            foreach (var parser in ValueParsers)
+            foreach (var parser in ValueParserSource.GetParsers())
             {
                 if (parser.TryParse(value.ToString(), out var obj))
                 {

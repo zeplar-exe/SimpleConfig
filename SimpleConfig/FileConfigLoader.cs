@@ -1,22 +1,36 @@
-﻿namespace SimpleConfig;
+﻿using SimpleConfig.ValueParsers.Sources;
 
-public class FileConfigLoader : IConfigLoader
+namespace SimpleConfig;
+
+public class FileConfigLoader
 {
+    private IValueParserSource ValueParserSource { get; }
     public ConfigContainer Container { get; }
 
-    public FileConfigLoader()
+    public FileConfigLoader() : this(new ConfigContainer(), new AssemblyValueParserSource())
     {
-        Container = new ConfigContainer();
+        
     }
 
-    public FileConfigLoader(ConfigContainer container)
+    public FileConfigLoader(IValueParserSource valueParserSource) : this(new ConfigContainer(), valueParserSource)
+    {
+        
+    }
+
+    public FileConfigLoader(ConfigContainer container, IValueParserSource valueParserSource)
     {
         Container = container;
+        ValueParserSource = valueParserSource;
     }
 
-    public T Get<T>(string key)
+    public T? Get<T>(string key)
     {
         return Container.GetOfType<T>(key);
+    }
+    
+    public bool TryGet<T>(string key, out T? value)
+    {
+        return Container.TryGetOfType(key, out value);
     }
     
     public bool TryLoadFile(string file)
@@ -24,7 +38,7 @@ public class FileConfigLoader : IConfigLoader
         try
         {
             var text = File.ReadAllText(file);
-            var parser = new ConfigParser();
+            var parser = new ConfigParser(ValueParserSource);
 
             Container.AddFrom(parser.Parse(text));
             

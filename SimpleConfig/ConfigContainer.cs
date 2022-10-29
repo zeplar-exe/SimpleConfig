@@ -20,22 +20,9 @@ public class ConfigContainer
 
         if (EnforceDistinctTypes)
         {
-            string matchingKey = ""; 
-            
-            if (Configs.Any(p =>
-                {
-                    if (p.Value.GetType() == o.GetType())
-                    {
-                        matchingKey = p.Key;
-
-                        return true;
-                    }
-                    
-                    return false;
-                }))
+            if (TryGetOfType(key, o.GetType(), out _))
             {
-                Configs.Remove(matchingKey);
-                // matchingKey is guaranteed to be an actual key by this point
+                Configs.Remove(key);
             }
         }
                 
@@ -73,8 +60,44 @@ public class ConfigContainer
         return Configs[key];
     }
 
-    public T GetOfType<T>(string key)
+    public T? GetOfType<T>(string key)
     {
-        return (T)Configs[key].First(c => c is T);
+        return (T?)Configs[key].First(c => c is T?);
+    }
+    
+    public bool TryGetOfType<T>(string key, out T? value)
+    {
+        value = default;
+        
+        if (TryGetOfType(key, typeof(T), out var tempValue))
+        {
+            value = (T?)tempValue;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool TryGetOfType(string key, Type type, out object? value)
+    {
+        value = default;
+        object? valueHolder = default;
+        
+        var found = Configs.Any(p =>
+        {
+            if (p.Value.Any(v => v.GetType() == type))
+            {
+                valueHolder = p.Value;
+
+                return true;
+            }
+                    
+            return false;
+        });
+
+        value = valueHolder;
+
+        return found;
     }
 }
