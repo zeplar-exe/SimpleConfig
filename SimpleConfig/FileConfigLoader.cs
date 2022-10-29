@@ -8,7 +8,12 @@ public class FileConfigLoader : IConfigLoader
     {
         Container = new ConfigContainer();
     }
-    
+
+    public FileConfigLoader(ConfigContainer container)
+    {
+        Container = container;
+    }
+
     public T Get<T>(string key)
     {
         return Container.GetOfType<T>(key);
