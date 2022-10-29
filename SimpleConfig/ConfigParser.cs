@@ -25,15 +25,24 @@ public class ConfigParser
             var key = new StringBuilder();
             var value = new StringBuilder();
 
+            var foundEquals = false;
+
             while (reader.Peek() != -1)
             {
                 var next = (char)reader.Read();
 
                 if (next == '=')
+                {
+                    foundEquals = true;
+                    
                     break;
+                }
 
                 key.Append(next);
             }
+            
+            if (!foundEquals)
+                break;
 
             while (reader.Peek() != -1)
             {

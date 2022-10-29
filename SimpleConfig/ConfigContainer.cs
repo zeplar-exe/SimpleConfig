@@ -2,30 +2,20 @@
 
 public class ConfigContainer
 {
-    private Dictionary<string, List<object>> Configs { get; }
-    
-    public bool EnforceDistinctTypes { get; set; }
+    private Dictionary<string, List<object?>> Configs { get; }
 
     public ConfigContainer()
     {
-        Configs = new Dictionary<string, List<object>>();
+        Configs = new Dictionary<string, List<object?>>();
     }
 
     public void Add(string key, object o)
     {
         if (!Configs.ContainsKey(key))
         {
-            Configs[key] = new List<object>();
+            Configs[key] = new List<object?>();
         }
 
-        if (EnforceDistinctTypes)
-        {
-            if (TryGetOfType(key, o.GetType(), out _))
-            {
-                Configs.Remove(key);
-            }
-        }
-                
         Configs[key].Add(o);
     }
     
