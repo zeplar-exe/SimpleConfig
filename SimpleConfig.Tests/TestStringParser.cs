@@ -1,6 +1,8 @@
-﻿namespace SimpleConfig.ValueParsers;
+﻿using SimpleConfig.ValueParsers;
 
-public class StringConfigParser : ConfigValueParser
+namespace SimpleConfig.Tests;
+
+public class TestStringParser : ConfigValueParser
 {
     public override bool TryParse(string input, out object? output)
     {

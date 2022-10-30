@@ -9,7 +9,7 @@ public class ConfigContainer
         Configs = new Dictionary<string, List<object?>>();
     }
 
-    public void Add(string key, object o)
+    public void Add(string key, object? o)
     {
         if (!Configs.ContainsKey(key))
         {
@@ -19,11 +19,11 @@ public class ConfigContainer
         Configs[key].Add(o);
     }
     
-    public void AddRange(string key, IEnumerable<object> o)
+    public void AddRange(string key, IEnumerable<object?> o)
     {
         if (!Configs.ContainsKey(key))
         {
-            Configs[key] = new List<object>();
+            Configs[key] = new List<object?>();
         }
 
         foreach (var value in o)
@@ -73,12 +73,15 @@ public class ConfigContainer
     {
         value = default;
         object? valueHolder = default;
+
+        if (!Configs.ContainsKey(key))
+            return false;
         
         var found = Configs.Any(p =>
         {
-            if (p.Value.Any(v => v.GetType() == type))
+            if (p.Value.Any(v => v?.GetType() == type))
             {
-                valueHolder = p.Value;
+                valueHolder = p.Value.First(v => v?.GetType() == type);
 
                 return true;
             }
