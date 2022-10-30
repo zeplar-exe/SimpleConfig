@@ -20,4 +20,10 @@
       <ProjectReference Include="..\SimpleConfig\SimpleConfig.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Files\my_config.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

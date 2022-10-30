@@ -55,6 +55,11 @@ public class ConfigContainer
         return (T?)Configs[key].First(c => c is T?);
     }
     
+    public object? GetOfType(string key, Type type)
+    {
+        return Configs[key].First(c => c?.GetType() == type);
+    }
+    
     public bool TryGetOfType<T>(string key, out T? value)
     {
         value = default;
@@ -77,11 +82,11 @@ public class ConfigContainer
         if (!Configs.ContainsKey(key))
             return false;
         
-        var found = Configs.Any(p =>
+        var found = Configs[key].Any(v =>
         {
-            if (p.Value.Any(v => v?.GetType() == type))
+            if (v?.GetType() == type)
             {
-                valueHolder = p.Value.First(v => v?.GetType() == type);
+                valueHolder = v;
 
                 return true;
             }
@@ -92,5 +97,10 @@ public class ConfigContainer
         value = valueHolder;
 
         return found;
+    }
+
+    public void Clear()
+    {
+        Configs.Clear();
     }
 }

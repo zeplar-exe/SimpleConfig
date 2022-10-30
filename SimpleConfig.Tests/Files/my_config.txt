@@ -1,0 +1,5 @@
+CAKE="LIE";
+WATER="OIL";
+WEST=1;
+EAST=2;
+SOUTH=3;

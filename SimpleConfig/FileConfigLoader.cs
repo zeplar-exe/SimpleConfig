@@ -28,19 +28,35 @@ public class FileConfigLoader
         return Container.GetOfType<T>(key);
     }
     
+    public object? Get(string key, Type type)
+    {
+        return Container.GetOfType(key, type);
+    }
+    
     public bool TryGet<T>(string key, out T? value)
     {
         return Container.TryGetOfType(key, out value);
+    }
+    
+    public bool TryGet(string key, Type type, out object? value)
+    {
+        return Container.TryGetOfType(key, type, out value);
+    }
+
+    public void LoadFile(string file)
+    {
+        var text = File.ReadAllText(file);
+        var parser = new ConfigParser(ValueParserSource);
+        parser.Parse(text);
+
+        Container.AddFrom(parser.Parse(text));
     }
     
     public bool TryLoadFile(string file)
     {
         try
         {
-            var text = File.ReadAllText(file);
-            var parser = new ConfigParser(ValueParserSource);
-
-            Container.AddFrom(parser.Parse(text));
+            LoadFile(file);
             
             return true;
         }
@@ -48,5 +64,10 @@ public class FileConfigLoader
         {
             return false;
         }
+    }
+
+    public void Clear()
+    {
+        Container.Clear();
     }
 }
