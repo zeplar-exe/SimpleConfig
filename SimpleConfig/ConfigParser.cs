@@ -8,6 +8,11 @@ public class ConfigParser
 {
     private IValueParserSource ValueParserSource { get; }
 
+    public ConfigParser() : this(new AssemblyValueParserSource())
+    {
+        
+    }
+
     public ConfigParser(IValueParserSource valueParserSource)
     {
         ValueParserSource = valueParserSource;

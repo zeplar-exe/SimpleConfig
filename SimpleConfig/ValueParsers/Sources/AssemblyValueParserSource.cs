@@ -5,8 +5,7 @@ namespace SimpleConfig.ValueParsers.Sources;
 public class AssemblyValueParserSource : IValueParserSource
 {
     private static ConfigValueParser[] ValueParsers = Assembly
-        .GetExecutingAssembly()
-        .GetTypes()
+        .GetExecutingAssembly().GetTypes()
         .Where(t => t != typeof(ConfigValueParser) && typeof(ConfigValueParser).IsAssignableFrom(t))
         .Select(Activator.CreateInstance)
         .Cast<ConfigValueParser>()
