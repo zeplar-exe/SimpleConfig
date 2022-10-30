@@ -1,6 +1,3 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: .NET CI
 
 on:
@@ -36,8 +33,3 @@ jobs:
         gist-filename: code-coverage.json
         gist-id: ee8d6e2b9a02a5381da1398e993d7a30
         gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}
-    - name: Print code coverage
-      run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
-
-    - name: Print badge data
-      run: echo "Badge data ${{steps.test_step.outputs.badge}}"
