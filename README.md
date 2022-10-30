@@ -1,6 +1,6 @@
 # SimpleConfig
 
-![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/zeplar-exe/ee8d6e2b9a02a5381da1398e993d7a30/raw/SimpleConfigCoverlet)
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/zeplar-exe/ee8d6e2b9a02a5381da1398e993d7a30/raw/SimpleConfigCoverlet.json)
 
 SimpleConfig is a library featuring a permissive parser for key-value configurations.
 
