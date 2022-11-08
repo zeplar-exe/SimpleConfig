@@ -2,6 +2,13 @@
 
 namespace SimpleConfig.ValueParsers.Sources;
 
+/// <summary>
+/// <see cref="IValueParserSource"/> implementation which supplies an instance of every <see cref="ConfigValueParser"/>
+/// in the current assembly.
+/// </summary>
+/// <remarks>
+/// This implementation uses <see cref="Assembly.GetExecutingAssembly"/>.
+/// </remarks>
 public class AssemblyValueParserSource : IValueParserSource
 {
     private static ConfigValueParser[] ValueParsers = Assembly
@@ -12,6 +19,7 @@ public class AssemblyValueParserSource : IValueParserSource
         .ToArray();
 
 
+    /// <inheritdoc />
     public ConfigValueParser[] GetParsers()
     {
         return ValueParsers;

@@ -4,20 +4,36 @@ using SimpleConfig.ValueParsers.Sources;
 
 namespace SimpleConfig;
 
+/// <summary>
+/// The main parser for configuration key-value pairs.
+/// </summary>
 public class ConfigParser
 {
     private IValueParserSource ValueParserSource { get; }
 
+    /// <summary>
+    /// Create a new ConfigParser using an <see cref="AssemblyValueParserSource"/>.
+    /// </summary>
     public ConfigParser() : this(new AssemblyValueParserSource())
     {
         
     }
 
+    /// <summary>
+    /// Create a new ConfigParser using the provided <see cref="IValueParserSource"/>.
+    /// </summary>
+    /// <param name="valueParserSource">The parser source to use.</param>
     public ConfigParser(IValueParserSource valueParserSource)
     {
         ValueParserSource = valueParserSource;
     }
 
+    /// <summary>
+    /// Parse the specified input. See <see href="https://github.com/zeplar-exe/SimpleConfig">GitHub</see> for
+    /// implementation details.
+    /// </summary>
+    /// <param name="input">The input to parse.</param>
+    /// <returns>A <see cref="ConfigContainer"/> created from the parsed input.</returns>
     public ConfigContainer Parse(string input)
     {
         var container = new ConfigContainer();
